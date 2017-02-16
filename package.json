@@ -1,12 +1,17 @@
 {
   "name": "ember-store-events",
   "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Events for Ember store actions.",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "event",
+    "store"
   ],
   "license": "MIT",
-  "author": "",
+  "author": {
+    "name": "Alexander Chepurnoy",
+    "email": "chepurnoy.aleksandr@gmail.com"
+  },
   "directories": {
     "doc": "doc",
     "test": "tests"
