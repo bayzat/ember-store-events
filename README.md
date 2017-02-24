@@ -1,27 +1,52 @@
 # ember-store-events
 
-This README outlines the details of collaborating on this Ember addon.
+Provides events for Ember store actions.
 
-## Installation
 
-* `git clone <repository-url>` this repository
-* `cd ember-store-events`
-* `npm install`
-* `bower install`
+## Setup
 
-## Running
+Add the provided mixin to application adapter:
+```js
+// adapters/application.js
+import DS from 'ember-data';
+import EventedAdapterMixin from 'ember-store-events/mixins/adapter';
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+export default DS.JSONAPIAdapter.extend(EventedAdapterMixin, {
+});
 
-## Running Tests
+```
+or to specific model adapter:
+```js
+// adapters/post.js
+import ApplicationAdapter from './application';
+import EventedAdapterMixin from 'ember-store-events/mixins/adapter';
 
-* `npm test` (Runs `ember try:each` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
+export default ApplicationAdapter.extend(EventedAdapterMixin, {
+});
 
-## Building
+```
 
-* `ember build`
 
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+## Usage
+
+Inject the service and subscribe to events:
+```js
+// routes/application.js
+import Ember from 'ember';
+
+export default Ember.Route.extend({
+  storeEvents: Ember.inject.service(),
+
+  beforeModel() {
+    this._super(...arguments);
+    this.get('storeEvents').on('update-record', (record, id) => {
+      window.alert(`record ${record.constructor.modelName} with id ${id} updated`);
+    });
+  },
+
+});
+
+```
+
+Addon provides 3 events `create-record`, `delete-record` and `update-record`,
+all of which passing 2 arguments: `record` and `id`.

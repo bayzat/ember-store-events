@@ -16,7 +16,9 @@
     "doc": "doc",
     "test": "tests"
   },
-  "repository": "",
+  "repository": "https://github.com/wuron/ember-store-events",
+  "bugs": "https://github.com/wuron/ember-store-events/issues",
+  "homepage": "https://github.com/wuron/ember-store-events",
   "scripts": {
     "build": "ember build",
     "start": "ember server",
