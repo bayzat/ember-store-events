@@ -1,5 +1,30 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+<h2>Create post</h2>
+<form {{action "createPost" on="submit"}}>
+  <label>
+    <div>Title</div>
+    {{input value=newPostTitle class="title"}}
+  </label>
+  <button type="submit" class="submit">Create</button>
+</form>
+
+<h2>Posts</h2>
+<ul class="posts">
+  {{#each model as |post|}}
+    <li class="post-{{post.id}}">
+      {{post.title}}
+      <button {{action "togglePublishPost" post}} class="publish">{{if post.isPublished "Unpublish" "Publish"}}</button>
+      <button {{action "deletePost" post}} class="delete">Delete</button>
+    </li>
+  {{else}}
+    <li>no posts</li>
+  {{/each}}
+</ul>
+
+<h2>Events</h2>
+<ul class="events">
+  {{#each eventsArray as |event|}}
+    <li><span class="name">{{event.name}}</span> <span class="id">{{event.id}}</span></li>
+  {{/each}}
+</ul>
 
 {{outlet}}
