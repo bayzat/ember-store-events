@@ -2,6 +2,10 @@
 
 Provides events for Ember store actions.
 
+## Installation
+```sh
+ember install ember-store-events
+```
 
 ## Setup
 
@@ -48,5 +52,9 @@ export default Ember.Route.extend({
 
 ```
 
-Addon provides 3 events `create-record`, `delete-record` and `update-record`,
-all of which passing 2 arguments: `record` and `id`.
+### Service
+
+The `storeEvents` is just an empty service extending `Ember.Evented` mixin.
+You can inject it where it's needed and subscribe to events triggered by the adapter:
+`create-record`, `delete-record` and `update-record`.
+Every event is triggered with two arguments: `record` and `id`.
