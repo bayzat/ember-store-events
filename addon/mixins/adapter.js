@@ -5,7 +5,7 @@ export default Ember.Mixin.create({
 
   createRecord(store, type, snapshot) {
     return this._super(...arguments).then((result) => {
-      this.get('storeEvents').trigger('create-record', snapshot.record, result.id);
+      this.get('storeEvents').trigger('create-record', snapshot.record, result.id || snapshot.id);
       return result;
     });
   },
