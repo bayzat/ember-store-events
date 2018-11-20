@@ -1,4 +1,5 @@
-import Ember from 'ember';
+import Evented from '@ember/object/evented';
+import Service from '@ember/service';
 
-export default Ember.Service.extend(Ember.Evented, {
+export default Service.extend(Evented, {
 });

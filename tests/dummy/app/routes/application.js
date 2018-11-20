@@ -1,14 +1,16 @@
-import Ember from 'ember';
+import { A } from '@ember/array';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  storeEvents: Ember.inject.service(),
+export default Route.extend({
+  storeEvents: service(),
 
   model() {
     return this.store.findAll('post');
   },
 
   setupController(controller, model) {
-    const eventsArray = Ember.A();
+    const eventsArray = A();
     controller.setProperties({ model, eventsArray });
     this.get('storeEvents').on('create-record', (record, id) => {
       controller.get('eventsArray').pushObject({ name: 'create-record', record, id });
