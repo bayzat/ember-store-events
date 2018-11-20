@@ -1,37 +1,26 @@
-import { test } from 'qunit';
-import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
+import { click, fillIn, find, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
+import { setupApplicationTest } from 'ember-qunit';
 
-moduleForAcceptance('Acceptance | store events');
+module('Acceptance | store events', function(hooks) {
+  setupApplicationTest(hooks);
 
-let newRecordId;
+  let newRecordId;
 
-test('store-events', function(assert) {
-  assert.expect(5);
-  visit('/');
+  test('store-events', async function(assert) {
+    assert.expect(5);
+    await visit('/');
 
-  fillIn('input.title', 'My new post');
-  click('button.submit');
+    await fillIn('input.title', 'My new post');
+    await click('button.submit');
 
-  andThen(() => {
-    assert.equal(find('ul.events li:last-child span.name').text(), 'create-record');
-    newRecordId = find('ul.events li:last-child span.id').text()
+    assert.dom(find('ul.events li:last-child span.name')).hasText('create-record');
+    newRecordId = find('ul.events li:last-child span.id').textContent
+    await click(`ul.posts li.post-${newRecordId} button.publish`);
+    assert.dom(find('ul.events li:last-child span.name')).hasText('update-record');
+    assert.dom(find('ul.events li:last-child span.id')).hasText(newRecordId);
+    await click(`ul.posts li.post-${newRecordId} button.delete`);
+    assert.dom(find('ul.events li:last-child span.name')).hasText('delete-record');
+    assert.dom(find('ul.events li:last-child span.id')).hasText(newRecordId);
   });
-
-  andThen(() => {
-    click(`ul.posts li.post-${newRecordId} button.publish`);
-  })
-
-  andThen(() => {
-    assert.equal(find('ul.events li:last-child span.name').text(), 'update-record');
-    assert.equal(find('ul.events li:last-child span.id').text(), newRecordId);
-  })
-
-  andThen(() => {
-    click(`ul.posts li.post-${newRecordId} button.delete`);
-  })
-
-  andThen(() => {
-    assert.equal(find('ul.events li:last-child span.name').text(), 'delete-record');
-    assert.equal(find('ul.events li:last-child span.id').text(), newRecordId);
-  })
 });
