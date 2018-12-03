@@ -1,6 +1,6 @@
 {
   "name": "ember-store-events",
-  "version": "0.0.2",
+  "version": "0.0.3-bayzat",
   "description": "Events for Ember store actions.",
   "keywords": [
     "ember-addon",
